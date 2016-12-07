@@ -1,6 +1,6 @@
 ---
 # BROOKLYN_VERSION_BELOW
-title: Other 0.10.0-REAPPT-1.4.2 Resources
+title: Other 0.10.0-REAPPT-1.4.3-SNAPSHOT Resources
 layout: website-normal
 started-pdf-exclude: true
 children:
