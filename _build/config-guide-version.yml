@@ -1,6 +1,6 @@
 path:
   # BROOKLYN_VERSION_BELOW
-  guide: /v/0.10.0-REAPPT-1.4.3-SNAPSHOT
+  guide: /v/0.10.0-REAPPT-1.4.3
   # BROOKLYN_VERSION_BELOW
-  style: /v/0.10.0-REAPPT-1.4.3-SNAPSHOT/style
+  style: /v/0.10.0-REAPPT-1.4.3/style
   website: ""
