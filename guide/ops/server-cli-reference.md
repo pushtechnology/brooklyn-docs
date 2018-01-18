@@ -14,9 +14,11 @@ To launch Brooklyn, from the directory where Brooklyn is unpacked, run:
 % nohup bin/brooklyn launch > /dev/null 2>&1 &
 {% endhighlight %}
 
-With no configuration, this will launch the Brooklyn web console and REST API on [`http://localhost:8081/`](http://localhost:8081/).
-No password is set, but the server is listening only on the loopback network interface for security.
-Once [security is configured](brooklyn_properties.html), Brooklyn will listen on all network interfaces by default.
+With no configuration, this will launch the Brooklyn web console and REST API on [`http://localhost:8081/`](http://localhost:8081/),
+listening on all network interfaces. No credentials are required by default. For a production 
+system, or if Apache Brooklyn is publicly reachable, it is strongly recommended to 
+[configure security](brooklyn_properties.html).
+
 By default, Brooklyn will write log messages at the INFO level or above to `brooklyn.info.log` and messgages at the
 DEBUG level or above to `brooklyn.debug.log`. Redirecting the output to `/dev/null` prevents the default console output
 being written to `nohup.out`.
@@ -61,18 +63,24 @@ export PATH=$PATH:$BROOKLYN_HOME/usage/dist/target/brooklyn-dist/bin/
 ### Memory Usage
 
 The amount of memory required by the Brooklyn process depends on the usage 
-- for example the number of entities/VMs under management.
+-- for example the number of entities/VMs under management.
 
 For a standard Brooklyn deployment, the defaults are to start with 256m, and to grow to 1g of memory.
 These numbers can be overridden by setting the environment variable `JAVA_OPTS` before launching
-the `brooklyn script`:
+the `brooklyn script`, as follows:
 
-    JAVA_OPTS=-Xms1g -Xmx1g -XX:MaxPermSize=256m
+    JAVA_OPTS="-Xms1g -Xmx4g"
+
+(On Java 8 and later the last entry has no effect and can be dropped.)
 
 Brooklyn stores a task history in-memory using [soft references](http://docs.oracle.com/javase/7/docs/api/java/lang/ref/SoftReference.html).
 This means that, once the task history is large, Brooklyn will continually use the maximum allocated 
 memory. It will only expunge tasks from memory when this space is required for other objects within the
 Brooklyn process.
+
+See [Memory Usage](troubleshooting/memory-usage.html) for more information on memory usage and
+other suggested `JAVA_OPTS`.
+
 
 ### Web Console Bind Address
 
@@ -189,3 +197,5 @@ or Swift. It has the following options:
 
 * `blob --container <containerName> --blob <blobName>`: retrieves the given blob
   (i.e. object), including metadata and its contents.
+
+

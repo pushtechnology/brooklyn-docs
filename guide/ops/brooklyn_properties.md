@@ -14,8 +14,6 @@ children:
 
 The file `~/.brooklyn/brooklyn.properties` is read when Brooklyn starts
 to load server configuration values.
-A different properties file can be specified either additionally or instead
-through [CLI options](server-cli-reference.html).
 
 A template [brooklyn.properties]({{brooklyn_properties_url_path}}) file is available,
 with abundant comments.
@@ -23,10 +21,11 @@ with abundant comments.
 
 ## Quick Setup
 
-The most common properties set in this file are for access control.
-Without this, Brooklyn will bind only to localhost or will create a random
-password written to the log for use on other networks.
-The simplest way to specify users and passwords is:
+The most common properties set in this file are for access control. Without this, Brooklyn's 
+web-console and REST api will require no authentication.
+
+The simplest way to specify users and passwords is shown below (but see the 
+[Authentication](#authentication) section for how to avoid storing passwords in plain text):
  
 {% highlight properties %}
 brooklyn.webconsole.security.users=admin,bob
@@ -38,8 +37,7 @@ The properties file *must* have permissions 600
 (i.e. readable and writable only by the file's owner),
 for some security.
 
-In many cases, it is preferable instead to use an external credentials store such as LDAP
-or at least to have passwords in this file.
+In many cases, it is preferable instead to use an external credentials store such as LDAP.
 Information on configuring these is [below](#authentication). 
 
 If coming over a network it is highly recommended additionally to use `https`.
@@ -57,7 +55,7 @@ More information, including setting up a certificate, is described [further belo
 Values in `brooklyn.properties` can use the Camp YAML syntax. Any value starting `$brooklyn:` is 
 parsed as a Camp YAML expression.
 
-This allows [externalized configuration](externalized-configuration.html) to be used from 
+This allows [externalized configuration]({{ site.path.guide}}/ops/externalized-configuration.html) to be used from 
 brooklyn.properties. For example:
 
 {% highlight properties %}
@@ -76,7 +74,7 @@ example.property=$brooklyn:literal("$brooklyn:myexample")
 
 ## Locations
 
-Information on defining locations in the `brooklyn.properties` file is available [here](locations/).
+Information on defining locations in the `brooklyn.properties` file is available [here]({{ site.path.guide }}/locations/).
 
 
 ## Java
@@ -147,11 +145,11 @@ The other things you need to set in `brooklyn.properties` are:
 
 **brooklyn.properties example configuration:**
 
-```
+~~~
 brooklyn.webconsole.security.provider=org.apache.brooklyn.rest.security.provider.LdapSecurityProvider
 brooklyn.webconsole.security.ldap.url=ldap://localhost:10389/????X-BIND-USER=uid=admin%2cou=system,X-BIND-PASSWORD=secret,X-COUNT-LIMIT=1000
 brooklyn.webconsole.security.ldap.realm=example.com
-```
+~~~
 
 After you setup the brooklyn connection to your LDAP server, you can authenticate in brooklyn using your cn (e.g. John Smith) and your password.
 `org.apache.brooklyn.rest.security.provider.LdapSecurityProvider` searches in the LDAP tree in LDAP://cn=John Smith,ou=Users,dc=example,dc=com
@@ -206,28 +204,15 @@ brooklyn.entitlements.perUser.metrics=minimal
 {% endhighlight %}
 
 For more information, see 
-[Java: Entitlements]({{ site.path.guide }}/java/entitlements.html).
+[Java: Entitlements]({{ site.path.guide }}/blueprints/java/entitlements.html).
 or
 {% include java_link.html class_name="EntitlementManager" package_path="org/apache/brooklyn/api/mgmt/entitlement" project_subpath="api" %}.
 
 
+
 ## HTTPS Configuration
 
-To enable https, you will need a server certificate in a java keystore. To create a self-signed certificate, you can use the
-following command:
-
-{% highlight bash %}
-% keytool -genkey -keyalg RSA -alias brooklyn -keystore <path-to-keystore-directory>/server.key -storepass mypassword -validity 360 -keysize 2048
-{% endhighlight %}
-
-You will then be prompted to enter you name and organization details. This will create a keystore with the password `mypassword`
-- you should use your own secure password, which will be the same password used in your brooklyn.properties (below). 
-You will also need to replace `<path-to-keystore-directory>` with the full path of the folder where you wish to store your
-keystore. 
-
-The certificate generated will be a self-signed certificate and will not have a CN field identifying the website server 
-name, which will cause a warning to be displayed by the browser when viewing the page. For production servers, a valid signed 
-certificate from a trusted certifying authority should be used instead
+See [HTTPS Configuration](https.html) for general information on configuring HTTPS.
 
 To enable HTTPS in Brooklyn, add the following to your brooklyn.properties:
 
@@ -237,3 +222,4 @@ brooklyn.webconsole.security.keystore.url=<path-to-keystore-directory>/server.ke
 brooklyn.webconsole.security.keystore.password=mypassword
 brooklyn.webconsole.security.keystore.certificate.alias=brooklyn
 {% endhighlight %}
+

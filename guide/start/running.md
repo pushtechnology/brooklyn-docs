@@ -38,7 +38,7 @@ Firstly, download and install:
  * [Oracle VirtualBox](https://www.virtualbox.org/wiki/Downloads){:target="_blank"}
  
 Then download the provided Apache Brooklyn vagrant configuration from {% if site.brooklyn-version contains 'SNAPSHOT' %}
-from [here](https://repository.apache.org/service/local/artifact/maven/redirect?r=snapshots&g=org.apache.brooklyn&a=brooklyn-vagrant&v={{site.brooklyn-version}}&c=dist&e=zip){:target="_blank"}.
+[here](https://repository.apache.org/service/local/artifact/maven/redirect?r=snapshots&g=org.apache.brooklyn&a=brooklyn-vagrant&v={{site.brooklyn-version}}&c=dist&e=zip){:target="_blank"}.
 {% else %}
 [here](https://www.apache.org/dyn/closer.lua?action=download&filename=brooklyn/apache-brooklyn-{{site.brooklyn-version}}/apache-brooklyn-{{site.brooklyn-version}}-vagrant.tar.gz){:target="_blank"}.
 {% endif %} This archive contains everything you need to create an environment for use with this guide, providing an Apache Brooklyn instance and some blank VMs.
@@ -134,12 +134,14 @@ Extract this zip file to a directory on your computer such as `c:\Program Files\
 
 ---
 
-It is not necessary at this time, but depending on what you are going to do, 
-you may wish to set up other configuration options first:
+By default, no authentication is required and the web-console will listen on all network interfaces.
+For a production system, or if Apache Brooklyn is publicly reachable, it is strongly recommended 
+to configure security. Documentation of configuration options include:
  
-* [Security](../ops/brooklyn_properties.html)
-* [Persistence](../ops/persistence/)
-* [Cloud credentials](../ops/locations/)
+* [Security]({{ site.path.guide }}/ops/brooklyn_properties.html)
+* [Persistence]({{ site.path.guide }}/ops/persistence/)
+* [Cloud credentials]({{ site.path.guide }}/locations/)
+
 
 ## Launch Apache Brooklyn
 
@@ -187,7 +189,7 @@ The application should then output its logs to `/var/log/brooklyn/apache-brookly
 
 <strong class="hidden started-pdf-include">c) Ubuntu / Debian</strong>
 
-Apache Brooklyn should now have been installed and be running as a system service. It can stopped and started with the standard service commands:
+Apache Brooklyn should now have been installed and be running as a system service. It can be stopped and started with the standard service commands:
 
 {% highlight bash %}
 $ sudo service brooklyn start|stop|restart|status
@@ -246,13 +248,13 @@ using the most appropriate link for your OS:
 * [OSX](https://www.apache.org/dyn/closer.lua/brooklyn/apache-brooklyn-{{site.brooklyn-version}}/apache-brooklyn-{{site.brooklyn-version}}-client-cli-macosx.tar.gz)
 {% endif %}
 
-For details on the CLI, see the [Client CLI Reference](../ops/cli/) page. 
+For details on the CLI, see the [Client CLI Reference]({{ site.path.guide }}/ops/cli/) page. 
 
 
 ## Next
 
 <div class="started-pdf-exclude">
 
-The first thing we want to do with Brooklyn is **[deploy a blueprint](blueprints.html)**.
+The first thing we want to do with Brooklyn is **[deploy a blueprint]({{ site.path.guide }}/start/blueprints.html)**.
 
 </div>

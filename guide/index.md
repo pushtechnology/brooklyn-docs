@@ -8,10 +8,9 @@ children:
 - { path: /guide/start/index.md }
 - { path: /guide/misc/download.md }
 - { path: /guide/concepts/index.md }
-- { path: /guide/yaml/index.md }
-- { path: /guide/java/index.md }
+- { path: /guide/blueprints/index.md }
+- { path: /guide/locations/index.md }
 - { path: /guide/ops/index.md }
-- { path: /guide/misc/osgi.md }
 - { path: /guide/misc/index.md }
 ---
 

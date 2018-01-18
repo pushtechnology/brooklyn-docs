@@ -20,7 +20,7 @@ requirements.
 
 ## Machine Diagnostics
 
-The following commands will collect OS-level diagnostics about the machine, and about the AMP 
+The following commands will collect OS-level diagnostics about the machine, and about the Brooklyn 
 process. The commands below assume use of CentOS 6.x. Minor adjustments may be required for
 other platforms.
 
@@ -65,7 +65,7 @@ for more information.
 #### Disk Space
 
 The command below will list the disk size for each partition, including the amount used and 
-available. If the AMP base directory, persistence directory or logging directory are close 
+available. If the Brooklyn base directory, persistence directory or logging directory are close 
 to 0% available, this can cause serious problems:
 
 {% highlight bash %}
@@ -115,7 +115,7 @@ for details of how to work around this.
 
 To get memory and thread usage for the Brooklyn (Java) process, two useful tools are `jstack` 
 and `jmap`. These require the "development kit" to also be installed 
-(e.g. `yum install java-1.7.0-openjdk-devel`). Some useful commands are shown below:
+(e.g. `yum install java-1.8.0-openjdk-devel`). Some useful commands are shown below:
 
 {% highlight bash %}
 BROOKLYN_HOME=/home/users/brooklyn/apache-brooklyn-0.9.0-bin
@@ -156,15 +156,15 @@ appropriate for a production server.
 
 If the Brooklyn Server was originally run to allow a remote debugger to connect (strongly 
 discouraged in production!), then this provides a convenient way to investigate why Brooklyn
-is being slow or unresonsive. See the Debugging Tips in the 
-tip [Debugging Remote Brooklyn][({{ site.path.guide }}/dev/tips/debugging-remote-brooklyn.html)
+is being slow or unresponsive. See the Debugging Tips in the 
+tip [Debugging Remote Brooklyn]({{ site.path.guide }}/dev/tips/debugging-remote-brooklyn.html)
 and the [IDE docs]({{ site.path.guide }}/dev/env/ide/) for more information.
 
 
 ## Log Files
 
 Apache Brooklyn will by default create brooklyn.info.log and brooklyn.debug.log files. See the
-[Logging](({{ site.path.guide }}/ops/logging.html) docs for more information.
+[Logging]({{ site.path.guide }}/ops/logging.html) docs for more information.
 
 The following are useful log messages to search for (e.g. using `grep`). Note the wording of
 these messages (or their very presence) may change in future version of Brooklyn. 

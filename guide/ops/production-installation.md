@@ -16,7 +16,7 @@ To install Apache Brooklyn on a production server:
 
 This guide covers the basics. You may also wish to configure:
 
-* [Logging](logging.html)
+* [Logging]({{ site.path.guide }}/ops/logging.html)
 * [Persistence](persistence/)
 * [High availability](high-availability/)
 
@@ -26,14 +26,16 @@ This guide covers the basics. You may also wish to configure:
 Check that the server meets the [requirements](requirements.html).
 Then configure the server as follows:
 
-* install Java JRE or JDK (version 7 or later)
-* install an [SSH key]({{ site.path.guide }}/ops/locations/index.html#ssh-keys), if not available
-* if the "localhost" location will be used, enable [passwordless ssh login]({{ site.path.guide }}/ops/locations/index.html#ssh-keys)
+* install Java JRE or JDK (version 8 or later)
+* enable "Java Cryptography Extension" (already enabled out of the box of OpenJDK installs)
+* install an [SSH key]({{ site.path.guide }}/locations/index.html#ssh-keys), if not available
+* if the "localhost" location will be used, enable [passwordless ssh login]({{ site.path.guide }}/locations/index.html#ssh-keys)
 * create a `~/.brooklyn` directory on the host with `$ mkdir ~/.brooklyn`
 * check your `iptables` or other firewall service, making sure that incoming connections on port 8443 is not blocked
 * check that the [linux kernel entropy]({{ site.path.guide }}/ops/troubleshooting/increase-entropy.html) is sufficient
 * check that the [ulimit values]({{ site.path.guide }}/ops/troubleshooting/increase-system-resource-limits.html) are sufficiently high
 * ensure external libraries are up-to-date, including `nss` for SSL. 
+* ensure the time is continually accurate, ideally by running a service like the [ntp daemon](http://www.ntp.org/).
 
 
 ### <a id="download"></a>Download Apache Brooklyn
@@ -110,4 +112,4 @@ Launch Brooklyn in a disconnected session so it will remain running after you ha
 
 Apache Brooklyn should now be running on port 8081 (or other port if so specified).
 
-
+To install on a different port edit config in `etc/org.ops4j.pax.web.cfg`.

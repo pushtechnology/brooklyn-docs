@@ -28,14 +28,14 @@ There are three main consumers of disk space:
   the `lib` directory. Note that Brooklyn requires that Java is installed which
   you may have to consider when calculating disk space requirements.
 * **Persisted state**: when using [Persistence](persistence/index.html) -- which
-  is a prerequisite for [High Availability](high-availability.html) -- Brooklyn
+  is a prerequisite for [High Availability](high-availability) -- Brooklyn
   will save data to a store location. Items in the persisted state include
   metadata about the Brooklyn servers, catalog items, and metadata about all
   running applications and entities.
 * **Log files**: Brooklyn writes info and debug log files. By default, these are
   written to the local filesystem. This can be reconfigured to set the
   destination and to increase or decrease the detail in the logs. See the
-  [Logging](logging.html) section for more details.
+  [Logging]({{ site.path.guide }}/ops/logging.html) section for more details.
 
 The Apache Brooklyn distribution itself, when unpacked, consumes approximately
 75MB of disk space. This includes everything needed to run Brooklyn except for a
@@ -56,23 +56,21 @@ therefore, can consume up to 2GB of disk space.
 
 In the default configuration of Brooklyn's `.tar.gz` and `.zip` distributions,
 logs are saved to the Brooklyn installation directory. You will most likely want
-to [reconfigure Brooklyn's logging](logging.html) to save logs to a location
+to [reconfigure Brooklyn's logging]({{ site.path.guide }}/ops/logging.html) to save logs to a location
 elsewhere. In the `.rpm` and `.deb` packaging, logging files will be located
 under `/var/log`. You can further reconfiguring the logging detail level and log
 rotation according to your organisation's policy.
 
 
-## Supported Operating Systems
+## OS Requirements
 
-The recommended operating system is CentOS 6.x or RedHat 6.x.
-
-Brooklyn has also been tested on Ubuntu 14.04 and OS X.
+Brooklyn is tested against CentOS (6 or later), RHEL (6 or later), Ubuntu (14.04 or later), OS X, and Windows.
 
 
 ## Software Requirements
 
-Brooklyn requires Java (JRE or JDK) minimum version 1.7. 
-OpenJDK is recommended. Brooklyn has also been tested on IBM J9 and Oracle's JVM.
+Brooklyn requires Java 8 (JRE or JDK) or later.
+OpenJDK is recommended. Brooklyn has also been tested on the Oracle JVM and IBM J9.
 
 
 ## Configuration Requirements

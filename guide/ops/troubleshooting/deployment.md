@@ -40,9 +40,12 @@ means there was some problem obtaining or connecting to the machine.
 An error like `... Not authorized to access cloud ...` usually means the wrong identity/credential was used.
 
 AWS requires a X-Amz-Date header which contains the date of the Apache Brooklyn AWS client.
-If the date on the server is wrong, for example several minutes behind you will get Authorization Exception.
-Please be sure that the machine which is running Apache Brooklyn set its clock correctly.
-To set the time on Linux we advice to use the ntp client: `sudo ntpdate pool.ntp.org`.
+If the date on the server is wrong, for example several minutes behind you will get an 
+Authorization Exception. This is to prevent replay attacks. Please be sure to set the clock 
+correctly on the machine running Apache Brooklyn. To set the time on Linux you can use the ntp 
+client (e.g. `sudo ntpdate pool.ntp.org`). We advise running the 
+[ntp daemon](http://www.tldp.org/LDP/sag/html/basic-ntp-config.html) so that the clock is kept 
+continually in sync.
 
 An error like `Unable to match required VM template constraints` means that a matching image (e.g. AMI in AWS terminology) could not be found. This 
 could be because an incorrect explicit image id was supplied, or because the match-criteria could not
@@ -157,7 +160,7 @@ See the [overview](overview.html) for where to find additional information, espe
 
 If you receive an error message similar to the one below when provisioning a VM, it means that the wrong username is being used for ssh'ing to the machine. The "invalid packet" is because a response such as "Please login as the ubuntu user rather than root user." is being sent back.
 
-You can workaround the issue by explicitly setting the user that AMP should use to login to the VM  (typically the OS default user).
+You can workaround the issue by explicitly setting the user that Brooklyn should use to login to the VM  (typically the OS default user).
 
 {% highlight bash %}
 error acquiring SFTPClient() (out of retries - max 50)
@@ -178,3 +181,13 @@ brooklyn.locations:
     credential: <add>
     loginUser: centos
 {% endhighlight %}
+
+## SSLException close_notify Exception
+
+The following error, when deploying a blueprint, has been shown to be caused by issues with DNS provided by your ISP or
+traffic filtering such as child-safe type filtering:
+
+    Caused by: javax.net.ssl.SSLException: Received fatal alert: close_notify
+
+To resolve this try disabling traffic filtering and setting your DNS to a public server such as 8.8.8.8 to use google
+[DNS](https://www.wikiwand.com/en/Google_Public_DNS).  [See here](https://developers.google.com/speed/public-dns/docs/using) for details on how to configure this.

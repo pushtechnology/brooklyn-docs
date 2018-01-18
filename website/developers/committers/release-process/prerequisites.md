@@ -34,8 +34,10 @@ Software packages
 
 The following software packages are required during the build. Make sure you have them installed.
 
-- A Java Development Kit, version 1.7
+- A Java Development Kit, version 1.8
 - `maven` and `git`
+- Go Language 1.6 - usually provided by the `golang` package on popular distributions
+- The `rpmbuild` command - usually provided by the `rpm` package on popular distributions
 - `xmlstarlet` is required by the release script to process version numbers in `pom.xml` files;
   on mac, `port install xmlstarlet` should do the trick.
 - `zip` and `unzip`
@@ -45,6 +47,7 @@ The following software packages are required during the build. Make sure you hav
 - `md5sum` and `sha1sum` - these are often present by default on Linux, but not on Mac;
   `port install md5sha1sum` should remedy that.
 - if `gpg` does not resolve (it is needed for maven), create an alias or script pointing at `gpg2 "$@"`
+- the `mmv` command (usually in a package named `mmv`) will help with the final steps of the release process
 
 
 GPG keys
@@ -55,8 +58,9 @@ The release manager must have a GPG key to be used to sign the release. See belo
 (not using `whoami` if that's not appropriate):
 
 {% highlight bash %}
-GPG_KEY=`whoami`@apache.org
-SVN_USERNAME=`whoami`
+ASF_USERNAME=`whoami`
+GPG_KEY=$ASF_USERNAME@apache.org
+SVN_USERNAME=$ASF_USERNAME
 {% endhighlight %}
 
 If you have an existing GPG key, but it does not include your Apache email address, you can add your email address as
@@ -75,20 +79,30 @@ Now add your key to the `apache-dist-release-brooklyn/KEYS` file:
 
 {% highlight bash %}
 cd apache-dist-release-brooklyn
-(gpg2 --list-sigs richard@apache.org && gpg2 --armor --export richard@apache.org) >> KEYS
-svn --username $SVN_USERNAME commit -m 'Update brooklyn/KEYS for $GPG_KEY'
+(gpg2 --list-sigs $ASF_USERNAME@apache.org && gpg2 --armor --export $ASF_USERNAME@apache.org) >> KEYS
+svn --username $SVN_USERNAME --no-auth-cache commit -m "Update brooklyn/KEYS for $GPG_KEY"
 {% endhighlight %}
 
-References: 
+References:
+
 * [Post on the general@incubator list](https://mail-archives.apache.org/mod_mbox/incubator-general/201410.mbox/%3CCAOGo0VawupMYRWJKm%2Bi%2ByMBqDQQtbv-nQkfRud5%2BV9PusZ2wnQ%40mail.gmail.com%3E)
 * [GPG cheatsheet](http://irtfweb.ifa.hawaii.edu/~lockhart/gpg/gpg-cs.html)
 
+We recommend the use of the `gpg-agent`, as the release process invokes gpg to sign a large number of artifacts, one at
+a time. The agent stores its configuration in `~/.gnupg/gpg-agent.conf`. A sample configuration is shown below; it uses
+the Mac OSX `pinentry-mac` program which can be obtained through MacPorts or other sources. For other platforms you will
+need to change this; sometimes you can omit it completely and your OS will pick a suitable alternative. The following
+two lines cause your passphrase to be cached in memory for a limited period; it will expire from the cache 30 minutes
+after it was most recently accessed, or 4 hours after it was first cached.  
+
+~~~
+pinentry-program /Applications/MacPorts/pinentry-mac.app/Contents/MacOS/pinentry-mac
+default-cache-ttl 1800
+max-cache-ttl 14400
+~~~
+
 If you experience trouble with PGP subsequently (when running maven):
-* On Mac make sure that `~/.gnupg/gpg-agent.conf` refers to the right file for `pinentry-program`;
-  it must point at a *binary* and preferably a pop-up which is keychain-aware,
-  such as with macports `/Applications/MacPorts/pinentry-mac.app/Contents/MacOS/pinentry-mac`
-* When the `pinentry` dialog pops up, tick to "Save to keychain", otherwise it will keep popping up
-  and may time out and fail the build
+
 * See [GnuPG/Pinentry Enigmail debugging](https://www.enigmail.net/support/gnupg2_issues.php) for tips on diagnosing gpg-agent communication (from the process to this agent and from this agent to the pinentry program)
 * See [GnuPG Agent Options](https://www.gnupg.org/documentation/manuals/gnupg/Agent-Options.html) for extended gpg-agent debug
 
