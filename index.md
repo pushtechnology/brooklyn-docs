@@ -8,7 +8,7 @@ title: Brooklyn Website and Docs (dev build)
 Consider looking at:
 
 * <a href="{{ site.path.website }}/">the brooklyn website</a>
-* <a href="{{ site.path.guide }}/">the brooklyn user guide (version 0.12.0-REAPPT-1.4.5-SNAPSHOT) <!-- BROOKLYN_VERSION --></a>
+* <a href="{{ site.path.guide }}/">the brooklyn user guide (version 0.12.0-REAPPT-1.4.6-SNAPSHOT) <!-- BROOKLYN_VERSION --></a>
 
 Also see the file <code>README.md</code> in this directory.
 
